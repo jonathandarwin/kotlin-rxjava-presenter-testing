@@ -16,7 +16,7 @@ import java.lang.Exception
 /**
  * Created By : Jonathan Darwin on May 02, 2021
  */ 
-class MainPresenterTestTest {
+class MainPresenterTest {
 
     private lateinit var presenter: MainContract.Presenter
 

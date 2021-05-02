@@ -8,7 +8,7 @@ import io.reactivex.rxjava3.core.Observable
  */ 
 class MainRepository {
 
-    private val userList = arrayListOf<UserDTO>()
+    val userList = arrayListOf<UserDTO>()
 
     init {
         userList.add(UserDTO("jonathandarwin", "Jonathan", "Darwin", "1999-02-17"))
@@ -25,10 +25,11 @@ class MainRepository {
     fun getUsersWithFullName(): Observable<List<UserDTO>> {
         return Observable.create<List<UserDTO>> { emitter ->
             emitter.onNext(userList)
-        }.flatMap {
-            Observable.fromIterable(it)
-        }.filter {
-            it.lastName != ""
-        }.toList().toObservable()
+        }
+        .map {
+            it.filter {
+                item -> item.lastName != ""
+            }
+        }
     }
 }
