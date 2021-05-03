@@ -8,7 +8,9 @@ import io.mockk.impl.annotations.MockK
 import io.mockk.verify
 import io.reactivex.rxjava3.android.plugins.RxAndroidPlugins
 import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.plugins.RxJavaPlugins
 import io.reactivex.rxjava3.schedulers.Schedulers
+import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import java.lang.Exception
@@ -37,9 +39,13 @@ class MainPresenterTest {
 
         // AndroidSchedulers.mainThread() using android framework dependencies, so we should override
         // and change the implementation of AndroidSchedulers.mainThread() to another thread
-        RxAndroidPlugins.setInitMainThreadSchedulerHandler {
-            _ -> Schedulers.trampoline()
-        }
+        RxAndroidPlugins.setInitMainThreadSchedulerHandler { Schedulers.trampoline() }
+    }
+
+    @After
+    fun tearDown() {
+        RxAndroidPlugins.reset()
+        RxJavaPlugins.reset()
     }
 
     @Test
